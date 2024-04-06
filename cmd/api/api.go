@@ -25,7 +25,8 @@ func (s *APIServer) Run() error {
 	router := echo.New()
 	subrouter := router.Group("/api/v1")
 
-	userHandler := user.NewHandler()
+	userStore := user.NewStore(s.db)
+	userHandler := user.NewHandler(userStore)
 	userHandler.RegisterRoutes(subrouter)
 
 	log.Println("Server is running on", s.addr)
